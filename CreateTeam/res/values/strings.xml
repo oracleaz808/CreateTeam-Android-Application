@@ -4,5 +4,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_teams">Teams</string>
+		
+	<string name="etTeamNameHint">Enter Team Here</string>
+	<string name="bCreateButtonText">Create Team</string>
 
 </resources>
