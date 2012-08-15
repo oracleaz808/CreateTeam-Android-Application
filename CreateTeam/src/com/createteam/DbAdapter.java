@@ -89,7 +89,6 @@ public class DbAdapter
 			} finally {
 				Log.d(DbHelperTag, DbHelperTag + " database was dropped" + tblTeams);
 			}
-			
 			Log.d(DbHelperTag, DbHelperTag + " - database upgraded.");
 		}		
 	}
