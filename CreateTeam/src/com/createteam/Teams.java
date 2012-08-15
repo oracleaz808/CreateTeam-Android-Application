@@ -8,7 +8,7 @@ import android.util.*;
 
 public class Teams extends Activity {
 
-    String TeamTag = "Teams Activity";
+    private static final String TeamTag = "Teams Activity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

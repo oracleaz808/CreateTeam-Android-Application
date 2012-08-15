@@ -30,8 +30,25 @@ public class DbAdapter
 	public DbAdapter(Context context){
 		this.context = context;
 		dbHelper = new DbHelper();
-		
 		Log.d(DbAdapterTag, DbAdapterTag + " - varibles declared and constructor called.");
+	}
+	
+	public void createTeam (String TeamName) {
+		try{
+			db = dbHelper.getWritableDatabase();
+
+			ContentValues cvTeamName = new ContentValues();
+			cvTeamName.put(Team_TeamName, TeamName);
+
+			db.insert(tblTeams, null, cvTeamName);
+			db.close();
+
+			Log.d(DbAdapterTag, "Tryed to create a team in the database.");
+		} catch (Exception e) {
+			Log.e(DbAdapterTag, "Error creating the team into the database.", e);
+		} finally {
+			Log.d(DbAdapterTag, "Successfully created " + TeamName + " in the table");
+		}
 	}
 	
 	public class DbHelper extends SQLiteOpenHelper
