@@ -14,27 +14,66 @@ public class DbAdapter
 	public static final String DB_NAME = "createteamdb.db";
 	public static final int DB_VERSION = 1;
 	
+	public static final String tblTeams = "tblTeams";
+
+	public static final String Team_ID = "_id";
+	public static final String Team_TeamName = "team_name";
+
+	public static final String TBLTEAMS_TABLE_CREATE = "create table " + tblTeams + " (" +
+	Team_ID + " integer primary key autoincrement, " +
+	Team_TeamName + " text not null);";
+	
 	Context context;
+	DbHelper dbHelper;
+	SQLiteDatabase db;
 	
 	public DbAdapter(Context context){
 		this.context = context;
-		Log.d(DbAdapterTag, DbAdapterTag + " - varibles declared.");
+		dbHelper = new DbHelper();
+		
+		Log.d(DbAdapterTag, DbAdapterTag + " - varibles declared and constructor called.");
 	}
 	
-	public class DBHelper extends SQLiteOpenHelper
+	public class DbHelper extends SQLiteOpenHelper
 	{
-		private static final String DBHelper_TAG = "DBHelper";
+		private static final String DbHelperTag = "DbHelper";
 
-		public DBHelper(){
+		public DbHelper(){
 			super(context, DB_NAME, null, DB_VERSION);
+			Log.d(DbHelperTag, DbHelperTag + " - constructor called.");
 		}
 
 		public void onCreate(SQLiteDatabase db)
 		{
+			try {
+				db.execSQL(TBLTEAMS_TABLE_CREATE);
+			} catch (SQLException e) {
+				Log.e(DbHelperTag, DbHelperTag + " has an Error! Error: " + e, e);
+
+				e.printStackTrace();
+			} finally {
+				Log.d(DbHelperTag, DbHelperTag + " onCreate sql: " + TBLTEAMS_TABLE_CREATE);
+				Log.d(DbHelperTag, DbHelperTag + " created the database and tables.");
+			}
+			Log.d(DbHelperTag, DbHelperTag + " - database created.");
 		}
 
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 		{
+			try {
+				db.execSQL("drop table if exists " + tblTeams);
+
+				this.onCreate(db);
+				Log.d(DbHelperTag, DbHelperTag + " attempted to drop table " + tblTeams);
+			} catch (SQLException e) {
+				Log.e(DbHelperTag, DbHelperTag + " Error! Error: " + e, e);
+
+				e.printStackTrace();
+			} finally {
+				Log.d(DbHelperTag, DbHelperTag + " database was dropped" + tblTeams);
+			}
+			
+			Log.d(DbHelperTag, DbHelperTag + " - database upgraded.");
 		}		
 	}
 }
